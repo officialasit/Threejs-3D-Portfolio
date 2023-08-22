@@ -3,7 +3,7 @@ name: Build Vite Project
 on:
   push:
     branches:
-      - main  # Adjust this to your main branch name
+      - main
 
 jobs:
   build:
@@ -26,3 +26,11 @@ jobs:
 
       - name: Move build output to docs
         run: mv dist docs
+
+      - name: Commit and push built files
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add docs
+          git commit -m "Deploy built files to docs directory"
+          git push origin main
