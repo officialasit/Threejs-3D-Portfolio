@@ -1,9 +1,9 @@
-name: Build Vite Project
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this to your project's main branch name
 
 jobs:
   build:
@@ -16,20 +16,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14  # Change this to your project's Node.js version
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build  # Adjust this command based on your Vite project's build script
 
       - name: Move build output to docs
         run: mv dist docs
 
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v2
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: docs
-          path: docs
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs
           
