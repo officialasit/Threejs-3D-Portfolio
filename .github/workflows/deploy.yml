@@ -23,3 +23,6 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Move build output to docs
+        run: mv dist docs
