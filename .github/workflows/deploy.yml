@@ -27,10 +27,16 @@ jobs:
       - name: Move build output to docs
         run: mv dist docs
 
-      - name: Commit and push built files
+      - name: Configure Git
         run: |
           git config user.name "GitHub Actions"
           git config user.email "github-actions@users.noreply.github.com"
+
+      - name: Commit and push built files
+        run: |
           git add docs
           git commit -m "Deploy built files to docs directory"
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/officialasit/Threejs-3D-Portfolio.git
           git push origin main
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
